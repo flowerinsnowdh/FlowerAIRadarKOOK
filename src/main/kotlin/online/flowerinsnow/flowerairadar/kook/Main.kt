@@ -4,11 +4,13 @@ import love.forte.simbot.component.kook.KookComponent
 import love.forte.simbot.component.kook.useKook
 import love.forte.simbot.core.application.SimpleApplication
 import love.forte.simbot.core.application.createSimpleApplication
-import online.flowerinsnow.flowerairadar.kook.config.ConfigManager
+import online.flowerinsnow.flowerairadar.kook.manager.ConfigManager
+import online.flowerinsnow.flowerairadar.kook.manager.DatabaseManager
 import org.apache.logging.log4j.LogManager
 
 lateinit var application : SimpleApplication
 val logger = LogManager.getLogger()
+
 suspend fun main() {
     // 读取配置文件
     ConfigManager.configFile = System.getProperty("farkook.config", ConfigManager.configFile)
@@ -17,8 +19,8 @@ suspend fun main() {
         return
     }
 
-    // TODO 连接数据库
     logger.info("连接数据库...")
+    DatabaseManager.connect()
 
     // 启动机器人
     logger.info("启动机器人...")
@@ -29,7 +31,7 @@ suspend fun main() {
             }
             botManager {
                 @Suppress("DEPRECATION")
-                register(clientId = ConfigManager.clientID, token = String(ConfigManager.token)) {bot ->
+                register(clientId = ConfigManager.clientID, token = String(ConfigManager.token)) { bot ->
                     it.onCompletion {
                         bot.start()
                     }

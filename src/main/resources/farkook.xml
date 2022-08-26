@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
+    <!-- 开启，若非true，则不允许启动 -->
     <enabled>false</enabled>
     <account>
+        <!-- KOOK机器人的Client-ID -->
         <clientID>username</clientID>
+        <!-- KOOK机器人的TOKEN -->
         <token>password</token>
     </account>
     <database>
+        <!-- MySQL 主机 -->
         <host>127.0.0.1</host>
+        <!-- MySQL 端口 -->
+        <port>3306</port>
+        <!-- MySQL 用户名 -->
         <user>root</user>
+        <!-- MySQL 密码 -->
         <password>root</password>
+        <!-- MySQL 库 -->
+        <schema>farkook</schema>
+        <!-- 数据库连接池 最大连接数 -->
+        <maxActive>8</maxActive>
+        <!-- 数据库连接最大等待 -->
+        <maxWait>3000</maxWait>
+        <!-- 数据库初始连接数 -->
+        <initialSize>4</initialSize>
     </database>
 </configuration>

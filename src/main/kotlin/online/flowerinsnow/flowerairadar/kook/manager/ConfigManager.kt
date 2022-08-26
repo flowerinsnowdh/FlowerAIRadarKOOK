@@ -1,4 +1,4 @@
-package online.flowerinsnow.flowerairadar.kook.config
+package online.flowerinsnow.flowerairadar.kook.manager
 
 import online.flowerinsnow.flowerairadar.kook.util.IOUtils
 import online.flowerinsnow.flowerairadar.kook.util.XMLUtils
@@ -18,8 +18,13 @@ object ConfigManager {
     var token = CharArray(0)
 
     var sqlHost = ""
+    var sqlPort = ""
     var sqlUser = ""
     var sqlPassword = CharArray(0)
+    var sqlSchema = ""
+    var sqlMaxActive = ""
+    var sqlMaxWait = ""
+    var sqlInitialSize = ""
 
     fun load() : Boolean {
         val file = File(configFile)
@@ -81,8 +86,23 @@ object ConfigManager {
                 "user" -> {
                     sqlUser = it.nodeValue
                 }
+                "port" -> {
+                    sqlPort = it.nodeValue
+                }
                 "password" -> {
                     sqlPassword = it.nodeValue.toCharArray()
+                }
+                "schema" -> {
+                    sqlSchema = it.nodeValue
+                }
+                "maxActive" -> {
+                    sqlMaxActive = it.nodeValue
+                }
+                "maxWait" -> {
+                    sqlMaxWait = it.nodeValue
+                }
+                "initialSize" -> {
+                    sqlInitialSize = it.nodeValue
                 }
             }
         }
