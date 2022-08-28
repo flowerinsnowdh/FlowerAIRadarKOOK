@@ -12,7 +12,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <kotlin.version>1.7.10</kotlin.version>
-        <main.class>online.flowerinsnow.flowerairadar.kook.Main</main.class>
+        <main.class>online.flowerinsnow.flowerairadar.kook.MainKt</main.class>
     </properties>
 
     <build>
@@ -84,16 +84,16 @@
     <dependencies>
         <!-- simbot Core -->
         <dependency>
-            <groupId>love.forte.simbot</groupId>
-            <artifactId>simbot-core</artifactId>
-            <version>3.0.0.preview.20.0</version>
+            <groupId>love.forte.simbot.boot</groupId>
+            <artifactId>simboot-core</artifactId>
+            <version>3.0.0-beta-RC.2</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>love.forte.simbot.component</groupId>
-            <artifactId>simbot-component-kook-core</artifactId>
-            <version>3.0.0.0.preview.14.0</version>
+            <artifactId>simbot-component-kook-boot</artifactId>
+            <version>3.0.0.0-alpha.1</version>
             <scope>compile</scope>
         </dependency>
 
@@ -105,9 +105,23 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api-kotlin</artifactId>
+            <version>1.2.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.2.9</version>
+            <version>1.2.11</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>2.0.12</version>
             <scope>compile</scope>
         </dependency>
 
@@ -115,6 +129,27 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.30</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cc.carm.lib</groupId>
+            <artifactId>easysql-impl</artifactId>
+            <version>0.4.6</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>online.flowerinsnow</groupId>
+            <artifactId>XMLReader-Core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>${kotlin.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

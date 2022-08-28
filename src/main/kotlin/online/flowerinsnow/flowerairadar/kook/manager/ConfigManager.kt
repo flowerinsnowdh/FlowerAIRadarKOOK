@@ -1,17 +1,14 @@
 package online.flowerinsnow.flowerairadar.kook.manager
 
 import online.flowerinsnow.flowerairadar.kook.util.IOUtils
-import online.flowerinsnow.flowerairadar.kook.util.XMLUtils
-import org.apache.logging.log4j.LogManager
-import org.w3c.dom.Document
-import org.w3c.dom.Node
+import online.flowerinsnow.xmlreader.api.node.XMLNode
+import online.flowerinsnow.xmlreader.core.XMLReader
+import org.apache.logging.log4j.kotlin.Logging
 import java.io.File
 import java.nio.file.Files
-import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.io.path.Path
 
-object ConfigManager {
-    val logger = LogManager.getLogger()
+object ConfigManager : Logging {
     var configFile = "farkook.xml"
 
     var clientID = ""
@@ -35,76 +32,53 @@ object ConfigManager {
             IOUtils.closeQuietly(default)
             return false
         }
-        val factory = DocumentBuilderFactory.newInstance()
-        val builder = factory.newDocumentBuilder()
-        val document = builder.parse(configFile)
-        if (!readRoot(document)) {
+
+        val root = XMLReader.readAsNode(file) // 读取XML配置文件
+        val childs = root.childNodes // 获取所有子节点
+        val configuration = childs["configuration"] ?: return false // 获取配置节点
+        if (!readRoot(configuration)) { // 读取配置节点 如果未准备则关闭程序
             logger.error("配置文件未能准备就绪，请在\"configuration\"将\"enabled\"节点设为true")
             return false
         }
         return true
     }
 
-    private fun readRoot(document : Document) : Boolean {
-        val list = document.getElementsByTagName("enabled")
-        if (list.length == 0 || !"true".equals(list.item(0).nodeValue, true)) {
+    private fun readRoot(node : XMLNode) : Boolean {
+        val childs = node.childNodes // 获取所有子节点
+        val enabled = childs["enabled"]?.valueAsBool ?: false // 子节点下 enabled是否为真
+
+        if (!enabled) { // 不为真 关闭程序
             return false
         }
 
-        XMLUtils.childNodesForEach(document) {
-            when (it.nodeName) {
-                "account" -> {
-                    readAccount(it)
-                }
-                "database" -> {
-                    readDatabase(it)
-                }
-            }
+        // 阅读子节点
+        val account = childs["account"]
+        if (account != null) {
+            readAccount(account)
+        }
+
+        val database = childs["database"]
+        if (database != null) {
+            readDatabase(database)
         }
         return true
     }
 
-    private fun readAccount(node : Node) {
-        XMLUtils.childNodesForEach(node) {
-            when (it.nodeName) {
-                "clientID" -> {
-                    clientID = it.nodeValue
-                }
-                "token" -> {
-                    token = it.nodeValue.toCharArray()
-                }
-            }
-        }
+    private fun readAccount(node : XMLNode) {
+        val childs = node.childNodes
+        clientID = childs["clientID"]?.value ?: ""
+        token = childs["token"]?.value?.toCharArray() ?: CharArray(0)
     }
 
-    private fun readDatabase(node : Node) {
-        XMLUtils.childNodesForEach(node) {
-            when (it.nodeName) {
-                "host" -> {
-                    sqlHost = it.nodeValue
-                }
-                "user" -> {
-                    sqlUser = it.nodeValue
-                }
-                "port" -> {
-                    sqlPort = it.nodeValue
-                }
-                "password" -> {
-                    sqlPassword = it.nodeValue.toCharArray()
-                }
-                "schema" -> {
-                    sqlSchema = it.nodeValue
-                }
-                "maxActive" -> {
-                    sqlMaxActive = it.nodeValue
-                }
-                "maxWait" -> {
-                    sqlMaxWait = it.nodeValue
-                }
-                "initialSize" -> {
-                    sqlInitialSize = it.nodeValue
-                }
-            }
-        }
+    private fun readDatabase(node : XMLNode) {
+        val childs = node.childNodes
+        sqlHost = childs["host"]?.value ?: ""
+        sqlUser = childs["user"]?.value ?: ""
+        sqlPort = childs["port"]?.value ?: ""
+        sqlPassword = childs["password"]?.value?.toCharArray() ?: CharArray(0)
+        sqlSchema = childs["schema"]?.value ?: ""
+        sqlMaxActive = childs["maxActive"]?.value ?: ""
+        sqlMaxWait = childs["maxWait"]?.value ?: ""
+        sqlInitialSize = childs["initialSize"]?.value ?: ""
     }
 }
