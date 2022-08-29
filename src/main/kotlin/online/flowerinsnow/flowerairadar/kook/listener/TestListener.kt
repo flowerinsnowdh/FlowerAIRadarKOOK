@@ -1,14 +1,18 @@
 package online.flowerinsnow.flowerairadar.kook.listener
 
 import love.forte.di.annotation.Beans
+import love.forte.simboot.annotation.Filter
 import love.forte.simboot.annotation.Listener
+import love.forte.simboot.filter.MatchType
+import love.forte.simbot.LoggerFactory
 import love.forte.simbot.event.ChannelMessageEvent
-import org.apache.logging.log4j.kotlin.Logging
 
 @Beans
-class TestListener : Logging {
+class TestListener {
+    private val logger = LoggerFactory.getLogger<TestListener>()
     @Listener
+    @Filter("/myid", matchType = MatchType.TEXT_EQUALS)
     suspend fun ChannelMessageEvent.testListener() {
-        logger.info("Author: ${author().username} Channel: ${channel().name} Guild: ${channel().guild().name} Context: ${messageContent.plainText}")
+        reply("您的ID是 ${author().id}")
     }
 }

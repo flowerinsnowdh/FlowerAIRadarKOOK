@@ -1,14 +1,16 @@
 package online.flowerinsnow.flowerairadar.kook.manager
 
+import love.forte.simbot.LoggerFactory
 import online.flowerinsnow.flowerairadar.kook.util.IOUtils
 import online.flowerinsnow.xmlreader.api.node.XMLNode
 import online.flowerinsnow.xmlreader.core.XMLReader
-import org.apache.logging.log4j.kotlin.Logging
 import java.io.File
 import java.nio.file.Files
 import kotlin.io.path.Path
 
-object ConfigManager : Logging {
+object ConfigManager {
+    private val logger = LoggerFactory.getLogger<ConfigManager>()
+
     var configFile = "farkook.xml"
 
     var clientID = ""
