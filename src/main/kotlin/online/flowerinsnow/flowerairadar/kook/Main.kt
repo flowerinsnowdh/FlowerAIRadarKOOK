@@ -13,10 +13,14 @@ import online.flowerinsnow.flowerairadar.kook.manager.PermissionManager
 class Main {
     companion object {
         lateinit var application : BootApplication
+
+        suspend fun start() {
+            a()
+        }
     }
 }
 
-suspend fun main() {
+suspend fun a() {
     val logger = LoggerFactory.getLogger<Main>()
     // 读取配置文件
     ConfigManager.configFile = System.getProperty("farkook.config", ConfigManager.configFile)

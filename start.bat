@@ -1,0 +1,1 @@
+java17 --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/jdk.internal.loader=ALL-UNNAMED -cp FlowerAIRadarKOOK-1.0.jar;libraries\org\jetbrains\kotlin\kotlin-stdlib\1.7.10\kotlin-stdlib-1.7.10.jar;libraries\org\jetbrains\kotlinx\kotlinx-coroutines-core-jvm\1.6.2\kotlinx-coroutines-core-jvm-1.6.2.jar; online.flowerinsnow.flowerairadar.kook.LauncherKt
